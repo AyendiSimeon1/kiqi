@@ -1,21 +1,36 @@
+import { SenderEmailModel, SenderModel } from "../../models/SenderEmail";
 import { User } from "../../models/User";
 import { SenderEmailService } from "../senderEmail.service";
 
+
 export class SenderEmailServiceImpl implements SenderEmailService{
-    async createSenderEmail(id: number, sender: string, type: string, email: string): Promise<User> {
-       const senderEmail
+    async createSenderEmail(id: String, sender: String, type: String, email: String): Promise<SenderEmailModel> {
+        const isSenderExist = await SenderModel.findOne({ email });
+
+        if (isSenderExist) {
+          throw new Error("Sender email already exists");
+        }
+    
+        const newSender = new SenderModel({ id, sender, type, email });
+        return await newSender.save();
     }
-    async getSenderEmailById(id: number): Promise<User | null> {
-        throw new Error("Method not implemented.");
+    async getSenderEmailById(id: String): Promise<SenderEmailModel | null> {
+        return SenderModel.findById(id);
     }
-    getAllSenderEmails(): Promise<[]> {
-        throw new Error("Method not implemented.");
+    getAllSenderEmails(): Promise<SenderEmailModel[]> {
+        return SenderModel.find();
     }
-    updateSenderEmail(id: number, data: Partial<{ sender: string; type: string; email: string; }>): Promise<User> {
-        throw new Error("Method not implemented.");
+    async updateSenderEmail(id: String, data: Partial<{ sender: string; type: string; email: string; }>): Promise<SenderEmailModel> {
+       const updated = await SenderModel.findByIdAndUpdate(id, data, { new: true });
+
+    if (!updated) {
+      throw new Error("Sender email not found");
     }
-    deleteSenderEmail(id: number): Promise<void> {
-        throw new Error("Method not implemented.");
+
+    return updated;
+    }
+    async deleteSenderEmail(id: String): Promise<void> {
+        await SenderModel.findByIdAndDelete(id);
     }
     
 }

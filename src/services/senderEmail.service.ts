@@ -1,9 +1,9 @@
-import { User } from "../models/User";
+import { SenderEmailModel } from "../models/SenderEmail";
 
 export interface SenderEmailService{
-    createSenderEmail(id: number, sender: string, type: string, email: string): Promise<User>
-    getSenderEmailById(id: number): Promise<User | null>
-    getAllSenderEmails(): Promise<[]>
-    updateSenderEmail(id: number, data: Partial<{sender: string, type: string, email: string}>): Promise<User>
-    deleteSenderEmail(id: number): Promise<void>
+    createSenderEmail(id: String, sender: String, type: String, email: String): Promise<SenderEmailModel>
+    getSenderEmailById(id: String): Promise<SenderEmailModel | null>
+    getAllSenderEmails(): Promise<SenderEmailModel[]>
+    updateSenderEmail(id: String, data: Partial<{sender: String, type: String, email: String}>): Promise<SenderEmailModel>
+    deleteSenderEmail(id: String): Promise<void>
 }
