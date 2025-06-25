@@ -4,6 +4,7 @@ import cors from 'cors';
 import errorHandler from './src/middlewares/ErrorHandler';
 import config from './src/config/index';
 import mainRouter from './src/routes/index';
+import senderRouter from './src/routes/senderEmail.routes';
 // import errorHandler from './middlewares/errorHandler.middleware';
 
 // Initialize express app
@@ -24,6 +25,7 @@ app.get('/', (req: Request, res: Response) => {
 });
 
 app.use('/api/v1', mainRouter);
+app.use("/api/v1/senderEmail", senderRouter)
 
 // Global Error Handler Middleware (must be last)
 // app.use(errorHandler);
