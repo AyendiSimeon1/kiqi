@@ -1,7 +1,7 @@
 import mongoose, { Document, Schema } from "mongoose"
 
 export interface SenderEmailModel extends Document{ 
-    id: string;
+    _id: string;
     senderName: string;
     type: String;
     senderEmail: string;

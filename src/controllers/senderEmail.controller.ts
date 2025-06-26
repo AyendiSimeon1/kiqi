@@ -15,9 +15,9 @@ export class SenderEmailController {
     next: NextFunction
   ): Promise<void> => {
     try {
-        const userId = req.params.id
+
       const { sender, type, email } = req.body;
-      const created = await this.senderEmailService.createSenderEmail(userId, sender, type, email);
+      const created = await this.senderEmailService.createSenderEmail( sender, type, email);
 
       res.status(StatusCodes.CREATED).json({
         error: false,

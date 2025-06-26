@@ -4,14 +4,14 @@ import { SenderEmailService } from "../senderEmail.service";
 
 
 export class SenderEmailServiceImpl implements SenderEmailService{
-    async createSenderEmail(id: String, sender: String, type: String, email: String): Promise<SenderEmailModel> {
+    async createSenderEmail(sender: String, type: String, email: String): Promise<SenderEmailModel> {
         const isSenderExist = await SenderModel.findOne({ email });
 
         if (isSenderExist) {
           throw new Error("Sender email already exists");
         }
     
-        const newSender = new SenderModel({ id, sender, type, email });
+        const newSender = new SenderModel({ sender, type, email });
         return await newSender.save();
     }
     async getSenderEmailById(id: String): Promise<SenderEmailModel | null> {
