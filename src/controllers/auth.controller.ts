@@ -29,8 +29,8 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { firstName, lastName, email, password } = req.body;
-      const user = await this.authService.createSenderEmail({ firstName, lastName, email, password });
+      const { firstName, lastName, email, password, organizationName } = req.body;
+      const user = await this.authService.createSenderEmail({ firstName, lastName, email, password, organizationName });
       res.status(StatusCodes.CREATED).json({
         error: false,
         message: `User registered successfully. Email: ${user.email}`,
