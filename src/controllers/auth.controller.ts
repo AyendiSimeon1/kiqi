@@ -15,8 +15,8 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { email } = req.body;
-      const { accessToken, refreshToken } = await this.authService.login({ email });
+      const { email, password } = req.body;
+      const { accessToken, refreshToken } = await this.authService.login({ email, password });
       res.status(StatusCodes.CREATED).json({ accessToken, refreshToken });
     } catch (error) {
       next(error);
@@ -29,11 +29,11 @@ export class AuthController {
     next: NextFunction
   ): Promise<void> => {
     try {
-      const { sender, type, email } = req.body;
-      const user = await this.authService.createSenderEmail({ sender, type, email });
+      const { firstName, lastName, email, password, organizationName } = req.body;
+      const user = await this.authService.createUser({ firstName, lastName, email, password, organizationName });
       res.status(StatusCodes.CREATED).json({
         error: false,
-        message: `User registered successfully. Email: ${user.senderEmail}`,
+        message: `User registered successfully. Email: ${user.email}`,
       });
     } catch (error) {
       next(error);
