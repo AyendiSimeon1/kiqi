@@ -1,2 +1,4 @@
 
-export interface Settings {}
+export interface Settings {
+    _id: String;
+}

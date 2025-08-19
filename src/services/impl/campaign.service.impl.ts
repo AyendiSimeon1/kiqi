@@ -39,20 +39,50 @@ export class CampaignServiceImpl implements CampaignService{
             if(!updated){
                 throw new Error("Campaign not found or updated")
             }
+            updated.save();
             return updated;
     }
+
     async deleteCampaign(id: String): Promise<void> {
        await CampaignModel.findByIdAndDelete(id)
     }
+
     async sendCampaign(id: String): Promise<CampaignDoc> {
-        throw new Error("Method not implemented.");
+  const campaign = await CampaignModel.findById(id);
+  if (!campaign) throw new ApiError(StatusCodes.NOT_FOUND, "Campaign not found");
+    if (campaign.status !== "Scheduled") {
+        throw new ApiError(StatusCodes.BAD_REQUEST, "Campaign must be scheduled before sending");
     }
-    async scheduleCampaign(id: String): Promise<CampaignDoc> {
-        // const campaignId = await CampaignModel.findById(id)
-        throw new Error("Method not implemented."); 
-    }
-    async getCampaignDeliveryStatus(): Promise<CampaignDoc> {
-        throw new Error("Method not implemented.");
+      campaign.status = "Sent";
+      campaign.sentAt = new Date();
+      await campaign.save();
+
+       return campaign;
+   };
+
+    
+    async scheduleCampaign(id: String, startDate: Date, endDate: Date, time: string): Promise<CampaignDoc> {
+  const campaign = await CampaignModel.findById(id);
+  if (!campaign) throw new ApiError(StatusCodes.NOT_FOUND, "Campaign not found");
+
+     campaign.status = "Scheduled";
+     campaign.startDate = startDate;
+     campaign.endDate = endDate;
+     campaign.time = time;
+     await campaign.save();
+
+       return campaign;
+};
+
+
+    async getCampaignDeliveryStatus(id: string): Promise<String> {
+         const campaign = await CampaignModel.findById(id);
+         if (!campaign) 
+            throw new ApiError(StatusCodes.NOT_FOUND, "Campaign not found");
+
+         if (!campaign.deliveryStatus) 
+            throw new ApiError(StatusCodes.NOT_FOUND, "Delivery status not found for this campaign");
+         return campaign.deliveryStatus;
     }
     
 }

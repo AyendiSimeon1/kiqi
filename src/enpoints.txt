@@ -1,18 +1,8 @@
-
-Audience Management
-// POST /api/email-lists/{id}/contacts - Add contacts to an email list.
-// DELETE /api/email-lists/{id}/contacts/{contactId} - Remove a contact from an email list.
+ Retrieve all contacts with filters (e.g., Unsubscribed, Bounced, Inactive).
 
 
 
-
-
-GET /api/contacts - Retrieve all contacts with filters (e.g., Unsubscribed, Bounced, Inactive).
-Email Templates
-
-POST /api/campaigns/{id}/send - Send a campaign to the selected audience.
-POST /api/campaigns/{id}/schedule - Schedule a campaign for later delivery.
-GET /api/campaigns/{id}/delivery-status - Retrieve delivery status (e.g., Deliveries, Opens, Clicks).
+Email Template
 Analytics
 GET /api/analytics - Retrieve overall analytics (e.g., Emails Sent, Avg. Open Rate, Unsubscribe Rate).
 GET /api/campaigns/{id}/analytics - Retrieve analytics for a specific campaign.

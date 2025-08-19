@@ -5,15 +5,20 @@ export interface CampaignDoc extends Document {
   campaignName: string;
   subjectLine: string;
   campaignType?: string;
-  status?: "Active" | "Scheduled" | "Completed" | "Pending";
-  deliveryStatus?: string;
+  status?: "Active" | "Scheduled" | "Completed" | "Pending" | "Sent";
+  deliveryStatus?: "Pending" | "Delivered" | "Failed" ;
   category?: string;
   campaignTopic?: string;
   instructions?: any[]; 
   reward?: string;
   startDate?: Date;
   endDate?: Date;
-  time?: Date;
+  sentAt?: Date
+  time?: string;
+  smsSent?: number;
+  emailSent?: number;
+  socialPosts?: number;
+  conversionRate?: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -25,7 +30,7 @@ const CampaignSchema = new Schema<CampaignDoc>(
     campaignType: { type: String },
     status: {
       type: String,
-      enum: ["Active", "Scheduled", "Completed", "Pending"],
+      enum: ["Active", "Scheduled", "Sent", "Completed", "Pending"],
       default: "Pending",
       required: true,
     },
@@ -36,6 +41,7 @@ const CampaignSchema = new Schema<CampaignDoc>(
     reward: { type: String, required: true, default: " " },
     startDate: { type: Date, required: true, default: " " },
     endDate: { type: Date, required: true, default: " " },
+    sentAt: { type: Date, required: true, default: null },
     time: { type: Date, required: true, default: " " },
   },
   {

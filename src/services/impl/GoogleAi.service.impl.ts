@@ -79,4 +79,6 @@ export class GoogleAiServiceImpl implements GoogleAiService{
               throw new Error("Chat failed");
             }
           }
+
+          async
     }
