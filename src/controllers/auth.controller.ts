@@ -31,9 +31,11 @@ export class AuthController {
     try {
       const { firstName, lastName, email, password, organizationName } = req.body;
       const user = await this.authService.createUser({ firstName, lastName, email, password, organizationName });
+      const accessToken = this.authService.generateAccessTokenForUser(user);
       res.status(StatusCodes.CREATED).json({
         error: false,
         message: `User registered successfully. Email: ${user.email}`,
+        accessToken
       });
     } catch (error) {
       next(error);
